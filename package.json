@@ -1,0 +1,26 @@
+{
+  "name": "obl2",
+  "version": "1.0.0",
+  "description": "Obligatorio 2 FIS",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/horaciomathias/OBL2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/horaciomathias/OBL2/issues"
+  },
+  "homepage": "https://github.com/horaciomathias/OBL2#readme",
+  "dependencies": {
+    "css-loader": "^5.0.1",
+    "script-loader": "^0.7.2",
+    "webpack": "^5.4.0",
+    "webpack-cli": "^4.2.0"
+  }
+}
