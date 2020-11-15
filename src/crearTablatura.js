@@ -3,7 +3,13 @@ function validateForm() {
   valido = true;
   x = document.forms["myForm"]["autor"].value;
   if (x == "" || x == null) {
-    alert("Debe completar el nombre");
+    alert("Debe completar el nombre del autor");
+    return false;
+  }
+
+  x = document.forms["myForm"]["song"].value;
+  if (x == "" || x == null) {
+    alert("Debe completar el nombre de la canción");
     return false;
   }
 
