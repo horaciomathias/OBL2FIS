@@ -104,14 +104,9 @@ function inicializarClases() {
 function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
   var clase = { tab, cancion, nombreAutor, nombreCancion };
   var clasesGuardadas = JSON.parse(localStorage.getItem("clases"));
-  alert(clasesGuardadas);
   if (clasesGuardadas == null || clasesGuardadas == "") {
     clasesGuardadas = [];
   }
-
   clasesGuardadas.push(clase);
   localStorage.setItem("clases", JSON.stringify(clasesGuardadas));
-
-  // Retrieve - genera un array de clases
-  //var aux = JSON.parse(localStorage.getItem("clases"));
 }
