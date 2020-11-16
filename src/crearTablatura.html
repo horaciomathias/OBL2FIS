@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Crear Tablatura</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styleCrearTablatura.css" />
+    <script src="crearTablatura.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <h1>Crear Tablatura</h1>
+    </div>
+    <div class="navbar">
+      <a href="../index.html" class="left">Volver</a>
+    </div>
+    <div class="img">
+      <div class="container">
+        <form name="myForm" onsubmit="return validateForm()" method="post" required>
+          <div class="row">
+            <div class="col-25">
+              <label for="fname" class="form-text">Nombre del autor:</label>
+            </div>
+            <div class="col-75">
+              <input
+                class="form-text"
+                type="text"
+                id="autor"
+                name="firstname"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="fname" class="form-text">Nombre de la canción:</label>
+            </div>
+            <div class="col-75">
+              <input
+                class="form-text"
+                type="text"
+                id="song"
+                name="songName"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="fname" class="form-text">Seleccione PDF de Tablatura:</label>
+            </div>
+            <div class="col-25">
+              <input class="form-text" type="file" accept="image/*, .pdf" id="tabFile" onchange="uploadTab(event)"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-25">
+              <label for="fname" class="form-text">Seleccione Canción:</label>
+            </div>
+            <div class="col-25">
+              <input class="form-text" type="file" accept=".mp3, .ogg" id="songFile" onchange="uploadSong(event)"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-75">
+              <button
+                type="submit"
+                class="button2"
+                value="submit"
+                style="vertical-align: middle"
+              >
+                <span>Enviar</span>
+              </button>
+            </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="container" id="elementos"></div>
+    </div>
+  </body>
+</html>

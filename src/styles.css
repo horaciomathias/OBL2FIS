@@ -45,6 +45,11 @@ body {
   float: right;
 }
 
+/* Left-aligned link */
+.navbar a.left {
+  float: left;
+}
+
 /* Change color on hover */
 .navbar a:hover {
   background-color: #ddd;
@@ -84,9 +89,9 @@ body {
 
 /* Fake image, just for this example */
 .img {
+  background-size: contain;
   background-color: #aaa;
   width: 100%;
-  height: auto;
   padding: 20px;
 }
 
@@ -127,4 +132,46 @@ body {
   background-color: green;
   color: white;
   transition-duration: 0.4s;
+}
+
+/* Button2 */
+
+.button2 {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #f4511e;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 15px;
+  padding: 10px;
+  width: 100px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+}
+
+.button2 span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button2 span:after {
+  content: "\00bb";
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button2:hover span {
+  padding-right: 25px;
+}
+
+.button2:hover span:after {
+  opacity: 1;
+  right: 0;
 }
