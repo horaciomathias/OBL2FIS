@@ -109,4 +109,18 @@ function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
   }
   clasesGuardadas.push(clase);
   localStorage.setItem("clases", JSON.stringify(clasesGuardadas));
+  listarClases();
+  alert("despues de listar clases");
+}
+
+function listarClases() {
+  alert("listar clases");
+  var clases = JSON.parse(localStorage.getItem("clases"));
+  document.getElementById("textoInicial").style.display = "none";
+  var cont = 0;
+  for (cont; clases.length; cont++) {
+    var elemento = document.getElementById(`${cont}`);
+    elemento.innerHTML = clases[cont].nombreCancion;
+    elemento.style.display = "block";
+  }
 }

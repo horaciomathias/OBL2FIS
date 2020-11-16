@@ -6,36 +6,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./src/styles.css" />
     <script src="src/index.js"></script>
+    <script src="src/crearTablatura.js"></script>
   </head>
   <body>
     <div class="header">
       <h1>Aprende a tocar Guitarra</h1>
     </div>
     <div class="navbar">
+      <button type="button" class="left" onclick="listarClases();">
+        Listar Tabs
+      </button>
       <a href="./src/crearTablatura.html" class="right">Crear Tablatura</a>
     </div>
     <div class="row">
       <div class="col-3 col-s-3 menu">
         <h2>Lista de canciones:</h2>
+        <p id="textoInicial" style="display: block">
+          No hay clases disponibles
+        </p>
         <ul>
-          <li>Menu 1</li>
-          <li>Menu 2</li>
-          <li>Menu 3</li>
-          <li>Menu 4</li>
-          <li>Menu 5</li>
-          <li>Menu 6</li>
+          <li style="display: none" id="0">Menu 1</li>
+          <li style="display: none" id="1">Menu 2</li>
+          <li style="display: none" id="2">Menu 3</li>
+          <li style="display: none" id="3">Menu 4</li>
+          <li style="display: none" id="4">Menu 5</li>
+          <li style="display: none" id="5">Menu 6</li>
+          <li style="display: none" id="6">Menu 7</li>
+          <li style="display: none" id="7">Menu 8</li>
+          <li style="display: none" id="8">Menu 9</li>
+          <li style="display: none" id="9">Menu 10</li>
+          <li style="display: none" id="10">Menu 11</li>
+          <li style="display: none" id="11">Menu 12</li>
+          <li style="display: none" id="12">Menu 13</li>
+          <li style="display: none" id="13">Menu 14</li>
+          <li style="display: none" id="14">Menu 15</li>
+          <li style="display: none" id="15">Menu 16</li>
+          <li style="display: none" id="16">Menu 17</li>
+          <li style="display: none" id="17">Menu 18</li>
+          <li style="display: none" id="18">Menu 19</li>
+          <li style="display: none" id="19">Menu 19</li>
+          <li style="display: none" id="20">Menu 20</li>
         </ul>
       </div>
       <div class="col-6 col-s-9">
         <div class="container">
-          <a href="./src/clases.html">
-            <img
-              src="./assets/imagenInicio.jpg"
-              class="img"
-              id="img"
-              alt="CLASES!"
-            />
-          </a>
+          <img
+            src="./assets/imagenInicio.jpg"
+            class="img"
+            id="img"
+            alt="CLASES!"
+          />
         </div>
       </div>
       <div class="col-3 col-s-12">
