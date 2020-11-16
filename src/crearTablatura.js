@@ -81,57 +81,57 @@ function validateFileSong() {
   }
 }
 
-var tab = new Image();
+var tab;
 var uploadTab = function (event) {
-  tab.scr = URL.createObjectURL(event.target.files[0]);
+  const reader = new FileReader();
+  reader.readAsDataURL(event.target.files[0]);
+  reader.addEventListener("load", () => {
+    tab = reader.result;
+  });
+  //tab = URL.createObjectURL(event.target.files[0]);
 };
 
 var cancion = new Audio();
 var uploadSong = function (event) {
+  //cancion = JSON.stringify(event.target.files[0]);
+  cancion = event.target.files[0];
   cancion.src = URL.createObjectURL(event.target.files[0]);
 };
-
-function inicializarClases() {
-  alert("Inicializando clasesGuardadas");
-  var clasesGuardadas = JSON.parse(localStorage["clases"]);
-  if (clasesGuardadas == null || clasesGuardadas == "") {
-    alert("dentro de if inicializando clases");
-    clasesGuardadas = [];
-    localStorage[nombreCancion] = JSON.stringify(clasesGuardadas);
-  }
-}
 
 function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
   var clase = { tab, cancion, nombreAutor, nombreCancion };
   var clasesGuardadas = JSON.parse(localStorage.getItem("clases"));
-  if (clasesGuardadas == null || clasesGuardadas == "") {
+  if (clasesGuardadas == null) {
     clasesGuardadas = [];
   }
-  clasesGuardadas.push(clase);
-  localStorage.setItem("clases", JSON.stringify(clasesGuardadas));
-  listarClases();
-  alert("despues de listar clases");
+  if (clasesGuardadas.length == 20) {
+    alert("Máximo de clases permitidas\nLa clase no fue agregada");
+    return;
+  } else {
+    clasesGuardadas.push(clase);
+    localStorage.setItem("clases", JSON.stringify(clasesGuardadas));
+  }
 }
 
 function listarClases() {
+  console.log(localStorage);
   var clases = JSON.parse(localStorage.getItem("clases"));
-  document.getElementById("textoInicial").style.display = "none";
   var cont = 0;
-  for (cont; clases.length; cont++) {
-    var elemento = document.getElementById(`${cont}`);
-    //elemento.innerHTML = <a href="">clases[cont].nombreCancion</a>;
-    elemento.innerHTML = clases[cont].nombreCancion;
-    elemento.style.display = "block";
+  if (clases == null || clases.length == 0) {
+    document.getElementById("textoInicial").style.display = "block";
+  } else {
+    document.getElementById("textoInicial").style.display = "none";
+    for (cont; clases.length; cont++) {
+      var elemento = document.getElementById(`${cont}`);
+      elemento.innerHTML = clases[cont].nombreCancion;
+      elemento.style.display = "block";
+    }
   }
 }
 
-function alertar(number) {
-  alert("Esta alertando de clase: " + number);
-}
-
 function borrarClases() {
-  document.getElementById("id01").style.display = "none";
   localStorage.clear();
+  document.getElementById("id01").style.display = "none";
 }
 
 function modalClases() {
@@ -146,4 +146,10 @@ function modalClases() {
 
 function cerrarModal() {
   document.getElementById("id01").style.display = "none";
+}
+
+function mostrarClase(num) {
+  var clases = JSON.parse(localStorage.getItem("clases"));
+  const urlImagen = clases[num].tab;
+  document.getElementById("img").src = urlImagen;
 }
