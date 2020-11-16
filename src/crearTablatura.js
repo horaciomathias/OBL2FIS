@@ -114,13 +114,36 @@ function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
 }
 
 function listarClases() {
-  alert("listar clases");
   var clases = JSON.parse(localStorage.getItem("clases"));
   document.getElementById("textoInicial").style.display = "none";
   var cont = 0;
   for (cont; clases.length; cont++) {
     var elemento = document.getElementById(`${cont}`);
+    //elemento.innerHTML = <a href="">clases[cont].nombreCancion</a>;
     elemento.innerHTML = clases[cont].nombreCancion;
     elemento.style.display = "block";
   }
+}
+
+function alertar(number) {
+  alert("Esta alertando de clase: " + number);
+}
+
+function borrarClases() {
+  document.getElementById("id01").style.display = "none";
+  localStorage.clear();
+}
+
+function modalClases() {
+  var modal = document.getElementById("id01");
+  modal.style.display = "block";
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+}
+
+function cerrarModal() {
+  document.getElementById("id01").style.display = "none";
 }
