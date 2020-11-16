@@ -49,7 +49,7 @@
               <label for="fname" class="form-text">Seleccione PDF de Tablatura:</label>
             </div>
             <div class="col-25">
-              <input class="form-text" type="file" id="tabFile" />
+              <input class="form-text" type="file" accept="image/*, .pdf" id="tabFile" onchange="uploadTab(event)"/>
             </div>
           </div>
           <div class="row">
@@ -57,7 +57,7 @@
               <label for="fname" class="form-text">Seleccione Canción:</label>
             </div>
             <div class="col-25">
-              <input class="form-text" type="file" id="songFile" />
+              <input class="form-text" type="file" accept=".mp3, .ogg" id="songFile" onchange="uploadSong(event)"/>
             </div>
           </div>
           <div class="row">
@@ -75,6 +75,7 @@
           </div>
         </form>
       </div>
+      <div class="container" id="elementos"></div>
     </div>
   </body>
 </html>

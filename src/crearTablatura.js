@@ -1,24 +1,27 @@
 function validateForm() {
-  var x;
+  var nombreAutor = document.forms["myForm"]["autor"].value;
   valido = true;
-  x = document.forms["myForm"]["autor"].value;
-  if (x == "" || x == null) {
+  if (nombreAutor == "" || nombreAutor == null) {
     alert("Debe completar el nombre del autor");
     return false;
   }
 
-  x = document.forms["myForm"]["song"].value;
-  if (x == "" || x == null) {
+  var nombreCancion = document.forms["myForm"]["song"].value;
+  if (nombreCancion == "" || nombreCancion == null) {
     alert("Debe completar el nombre de la canción");
     return false;
   }
 
-  valido = validateFileTab();
-  if (valido) {
-    validateFileSong();
+  tabValido = validateFileTab();
+  if (!tabValido) {
+    return false;
   }
 
-  agregarClase();
+  cancionValida = validateFileSong();
+  if (!cancionValida) {
+    return false;
+  }
+  agregarClase(tab, cancion.src, nombreAutor, nombreCancion);
   alert("Tablatura agregada exitosamente");
 }
 
@@ -59,7 +62,7 @@ function validateFileSong() {
   } else {
     //Verificacion de extension permitida
     var ext = x.substring(x.lastIndexOf(".")).toLowerCase();
-    extensionesPermitidas = [".mp4", ".mp3", ".wav"];
+    extensionesPermitidas = [".mp3", ".ogg"];
 
     extensionPermitida = false;
     for (var i = 0; i < extensionesPermitidas.length; i++) {
@@ -72,21 +75,43 @@ function validateFileSong() {
     if (!extensionPermitida) {
       alert("Extension de canción no permitida: " + ext);
       return false;
+    } else {
+      return true;
     }
   }
 }
 
-class Clase {
-  constructor(tab, cancion) {
-    this.Tablatura = tab;
-    this.cancion = cancion;
+var tab = new Image();
+var uploadTab = function (event) {
+  tab.scr = URL.createObjectURL(event.target.files[0]);
+};
+
+var cancion = new Audio();
+var uploadSong = function (event) {
+  cancion.src = URL.createObjectURL(event.target.files[0]);
+};
+
+function inicializarClases() {
+  alert("Inicializando clasesGuardadas");
+  var clasesGuardadas = JSON.parse(localStorage["clases"]);
+  if (clasesGuardadas == null || clasesGuardadas == "") {
+    alert("dentro de if inicializando clases");
+    clasesGuardadas = [];
+    localStorage[nombreCancion] = JSON.stringify(clasesGuardadas);
   }
 }
 
-function agregarClase() {
-  var tab = docudocument.forms["myForm"]["tabFile"];
-  var cancion = document.forms["myForm"]["songFile"];
+function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
+  var clase = { tab, cancion, nombreAutor, nombreCancion };
+  var clasesGuardadas = JSON.parse(localStorage.getItem("clases"));
+  alert(clasesGuardadas);
+  if (clasesGuardadas == null || clasesGuardadas == "") {
+    clasesGuardadas = [];
+  }
 
-  document.getElementById("demo").innerHTML = fruits.toString();
-  var clase = { tab, cancion };
+  clasesGuardadas.push(clase);
+  localStorage.setItem("clases", JSON.stringify(clasesGuardadas));
+
+  // Retrieve - genera un array de clases
+  //var aux = JSON.parse(localStorage.getItem("clases"));
 }
