@@ -21,7 +21,7 @@ function validateForm() {
   if (!cancionValida) {
     return false;
   }
-  agregarClase(tab, cancion.src, nombreAutor, nombreCancion);
+  agregarClase(tab, cancion, nombreAutor, nombreCancion);
   alert("Tablatura agregada exitosamente");
 }
 
@@ -88,14 +88,15 @@ var uploadTab = function (event) {
   reader.addEventListener("load", () => {
     tab = reader.result;
   });
-  //tab = URL.createObjectURL(event.target.files[0]);
 };
 
-var cancion = new Audio();
+var cancion;
 var uploadSong = function (event) {
-  //cancion = JSON.stringify(event.target.files[0]);
-  cancion = event.target.files[0];
-  cancion.src = URL.createObjectURL(event.target.files[0]);
+  const reader = new FileReader();
+  reader.readAsDataURL(event.target.files[0]);
+  reader.addEventListener("load", () => {
+    cancion = reader.result;
+  });
 };
 
 function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
@@ -151,5 +152,31 @@ function cerrarModal() {
 function mostrarClase(num) {
   var clases = JSON.parse(localStorage.getItem("clases"));
   const urlImagen = clases[num].tab;
+  const urlAudio = clases[num].cancion;
   document.getElementById("img").src = urlImagen;
+
+  var reproductor = document.getElementById("contenedorReproductor");
+  reproductor.style.display = "block";
+  var link = document.createElement("source");
+  link.src = urlAudio;
+
+  var sound = document.getElementById("audio");
+  sound.id = "audio-player";
+  sound.controls = "controls";
+  link.src = urlAudio;
+  sound.type = "audio/mpeg";
+  sound.appendChild(link);
+  reproductor.appendChild(sound);
+  /* ESTO FUNCIONA
+  var reproductor = document.getElementById("contenedorReproductor");
+  reproductor.style.display = "block";
+  var sound = document.createElement("audio");
+  var link = document.createElement("source");
+  sound.id = "audio-player";
+  sound.controls = "controls";
+  link.src = urlAudio;
+  sound.type = "audio/mpeg";
+  sound.appendChild(link);
+  reproductor.appendChild(sound);
+  */
 }
