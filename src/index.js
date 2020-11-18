@@ -199,3 +199,17 @@ function mostrarClase(num) {
   sound.type = "audio/mpeg";
   sound.appendChild(link);
 }
+
+module.exports = {
+  mostrarClase: mostrarClase,
+  cerrarModal: cerrarModal,
+  modalClases: modalClases,
+  borrarClases: borrarClases,
+  listarClases: listarClases,
+  agregarClase: agregarClase,
+  uploadSong: uploadSong,
+  uploadTab: uploadTab,
+  validateFileSong: validateFileSong,
+  validateFileTab: validateFileTab,
+  validateForm: validateForm,
+};
