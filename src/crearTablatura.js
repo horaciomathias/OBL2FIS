@@ -1,3 +1,24 @@
+class tablatura {
+  constructor(tab, nombreAutor) {
+    this.tab = tab;
+    this.nombreAutor = nombreAutor;
+  }
+}
+
+class song {
+  constructor(cancion, nombreCancion) {
+    this.cancion = cancion;
+    this.nombreCancion = nombreCancion;
+  }
+}
+
+class clase {
+  constructor(tablatura, song) {
+    this.tablatura = tablatura;
+    this.song = song;
+  }
+}
+
 function validateForm() {
   var nombreAutor = document.forms["myForm"]["autor"].value;
   valido = true;
@@ -21,8 +42,16 @@ function validateForm() {
   if (!cancionValida) {
     return false;
   }
-  agregarClase(tab, cancion, nombreAutor, nombreCancion);
-  alert("Tablatura agregada exitosamente");
+
+  let tablaturaClase = new tablatura(tab, nombreAutor);
+  let cancionClase = new song(cancion, nombreCancion);
+
+  var agregada = agregarClase(tablaturaClase, cancionClase);
+  if (agregada) {
+    alert("Tablatura agregada exitosamente");
+  } else {
+    alert("ERROR:\nNo se pudo agregar la clase");
+  }
 }
 
 function validateFileTab() {
@@ -99,23 +128,25 @@ var uploadSong = function (event) {
   });
 };
 
-function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
-  var clase = { tab, cancion, nombreAutor, nombreCancion };
+function agregarClase(tablaturaClase, cancionClase) {
+  let leccion = new clase(tablaturaClase, cancionClase);
   var clasesGuardadas = JSON.parse(localStorage.getItem("clases"));
   if (clasesGuardadas == null) {
     clasesGuardadas = [];
   }
-  if (clasesGuardadas.length == 20) {
-    alert("Máximo de clases permitidas\nLa clase no fue agregada");
-    return;
+  if (clasesGuardadas.length >= 20) {
+    alert(
+      "Máximo de clases permitidas alcanzado\nIntente borrar clases y luego creee nuevamente la tablatura"
+    );
+    return false;
   } else {
-    clasesGuardadas.push(clase);
+    clasesGuardadas.push(leccion);
     localStorage.setItem("clases", JSON.stringify(clasesGuardadas));
+    return true;
   }
 }
 
 function listarClases() {
-  console.log(localStorage);
   var clases = JSON.parse(localStorage.getItem("clases"));
   var cont = 0;
   if (clases == null || clases.length == 0) {
@@ -124,7 +155,7 @@ function listarClases() {
     document.getElementById("textoInicial").style.display = "none";
     for (cont; clases.length; cont++) {
       var elemento = document.getElementById(`${cont}`);
-      elemento.innerHTML = clases[cont].nombreCancion;
+      elemento.innerHTML = clases[cont].song.nombreCancion;
       elemento.style.display = "block";
     }
   }
@@ -133,6 +164,7 @@ function listarClases() {
 function borrarClases() {
   localStorage.clear();
   document.getElementById("id01").style.display = "none";
+  alert("Clases Borradas");
 }
 
 function modalClases() {
@@ -151,8 +183,8 @@ function cerrarModal() {
 
 function mostrarClase(num) {
   var clases = JSON.parse(localStorage.getItem("clases"));
-  const urlImagen = clases[num].tab;
-  const urlAudio = clases[num].cancion;
+  const urlImagen = clases[num].tablatura.tab;
+  const urlAudio = clases[num].song.cancion;
   document.getElementById("img").src = urlImagen;
 
   var reproductor = document.getElementById("contenedorReproductor");
@@ -166,17 +198,4 @@ function mostrarClase(num) {
   link.src = urlAudio;
   sound.type = "audio/mpeg";
   sound.appendChild(link);
-  reproductor.appendChild(sound);
-  /* ESTO FUNCIONA
-  var reproductor = document.getElementById("contenedorReproductor");
-  reproductor.style.display = "block";
-  var sound = document.createElement("audio");
-  var link = document.createElement("source");
-  sound.id = "audio-player";
-  sound.controls = "controls";
-  link.src = urlAudio;
-  sound.type = "audio/mpeg";
-  sound.appendChild(link);
-  reproductor.appendChild(sound);
-  */
 }
