@@ -222,4 +222,5 @@ module.exports = {
   validateFileSong: validateFileSong,
   validateFileTab: validateFileTab,
   validateForm: validateForm,
+  validarString: validarString,
 };
