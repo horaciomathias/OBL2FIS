@@ -19,44 +19,54 @@ class clase {
   }
 }
 
-function validateForm() {
-  var nombreAutor = document.forms["myForm"]["autor"].value;
-  valido = true;
-  if (nombreAutor == "" || nombreAutor == null) {
-    alert("Debe completar el nombre del autor");
-    return false;
-  }
-
-  var nombreCancion = document.forms["myForm"]["song"].value;
-  if (nombreCancion == "" || nombreCancion == null) {
-    alert("Debe completar el nombre de la canción");
-    return false;
-  }
-
-  tabValido = validateFileTab();
-  if (!tabValido) {
-    return false;
-  }
-
-  cancionValida = validateFileSong();
-  if (!cancionValida) {
-    return false;
-  }
-
-  let tablaturaClase = new tablatura(tab, nombreAutor);
-  let cancionClase = new song(cancion, nombreCancion);
-
-  var agregada = agregarClase(tablaturaClase, cancionClase);
-  if (agregada) {
-    alert("Tablatura agregada exitosamente");
+function validarString(unString) {
+  var retorno;
+  if (unString == "" || unString == null) {
+    retorno = false;
   } else {
-    alert("ERROR:\nNo se pudo agregar la clase");
+    retorno = true;
   }
+  return retorno;
+}
+
+function validateForm() {
+  var nombreAutor = document.forms["formulario"]["autor"].value;
+  valido = validarString(nombreAutor);
+
+  if (valido) {
+    var nombreCancion = document.forms["formulario"]["song"].value;
+    var valido = validarString(nombreCancion);
+
+    if (valido) {
+      valido = validateFileTab();
+
+      if (valido) {
+        valido = validateFileSong();
+      }
+    } else {
+      alert("Debe completar el nombre de la canción");
+    }
+  } else {
+    alert("Debe completar el nombre del autor");
+  }
+
+  if (valido) {
+    let tablaturaClase = new tablatura(tab, nombreAutor);
+    let cancionClase = new song(cancion, nombreCancion);
+
+    var agregada = agregarClase(tablaturaClase, cancionClase);
+    if (agregada) {
+      alert("Tablatura agregada exitosamente");
+    } else {
+      alert("ERROR:\nNo se pudo agregar la clase");
+    }
+  }
+  return valido;
 }
 
 function validateFileTab() {
   var x;
-  x = document.forms["myForm"]["tabFile"].value;
+  x = document.forms["formulario"]["tabFile"].value;
   if (x == "" || x == null) {
     alert("Debe seleccionar un archivo de tablatura");
     return false;
@@ -83,7 +93,7 @@ function validateFileTab() {
 
 function validateFileSong() {
   var x;
-  x = document.forms["myForm"]["songFile"].value;
+  x = document.forms["formulario"]["songFile"].value;
 
   if (x == "" || x == null) {
     alert("Debe seleccionar una canción");
