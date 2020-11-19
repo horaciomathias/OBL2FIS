@@ -16,6 +16,9 @@ test("Validación string", () => {
   expect(functions.validarString("Horacio")).toBe(true);
 });
 
+test("un test", () => {
+  expect(functions.clase("url", "nombre")).toBe(true);
+});
 /*
 test("Validacion de archivo tablatura", () => {
   expect(functions.validateFileTab("")).toBe(false);

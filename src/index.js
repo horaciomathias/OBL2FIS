@@ -38,10 +38,14 @@ function validateForm() {
     var valido = validarString(nombreCancion);
 
     if (valido) {
-      valido = validateFileTab();
+      var archivoTab;
+      archivoTab = document.forms["formulario"]["tabFile"].value;
+      valido = validateFileTab(archivoTab);
 
       if (valido) {
-        valido = validateFileSong();
+        var archivoCancion;
+        archivoCancion = document.forms["formulario"]["songFile"].value;
+        valido = validateFileSong(archivoCancion);
       }
     } else {
       alert("Debe completar el nombre de la canción");
@@ -51,10 +55,7 @@ function validateForm() {
   }
 
   if (valido) {
-    let tablaturaClase = new tablatura(tab, nombreAutor);
-    let cancionClase = new song(cancion, nombreCancion);
-
-    var agregada = agregarClase(tablaturaClase, cancionClase);
+    var agregada = agregarClase(tab, cancion, nombreAutor, nombreCancion);
     if (agregada) {
       alert("Tablatura agregada exitosamente");
     } else {
@@ -64,15 +65,14 @@ function validateForm() {
   return valido;
 }
 
-function validateFileTab() {
-  var x;
-  x = document.forms["formulario"]["tabFile"].value;
-  if (x == "" || x == null) {
+function validateFileTab(archivoTab) {
+  var retorno;
+  if (!validarString(archivoTab)) {
     alert("Debe seleccionar un archivo de tablatura");
-    return false;
+    retorno = false;
   } else {
     //Verificacion de extension permitida
-    var ext = x.substring(x.lastIndexOf(".")).toLowerCase();
+    var ext = archivoTab.substring(archivoTab.lastIndexOf(".")).toLowerCase();
     extensionesPermitidasTab = [".gif", ".jpg", ".doc", ".pdf", ".jpg", ".png"];
     extensionPermitida = false;
     for (var i = 0; i < extensionesPermitidasTab.length; i++) {
@@ -84,24 +84,25 @@ function validateFileTab() {
 
     if (!extensionPermitida) {
       alert("Extension de tablatura no permitida: " + ext);
-      return false;
+      retorno = false;
     } else {
-      return true;
+      retorno = true;
     }
   }
+  return retorno;
 }
 
-function validateFileSong() {
-  var x;
-  x = document.forms["formulario"]["songFile"].value;
-
-  if (x == "" || x == null) {
+function validateFileSong(archivoCancion) {
+  var retorno;
+  if (!validarString(archivoCancion)) {
     alert("Debe seleccionar una canción");
-    return false;
+    retorno = false;
   } else {
     //Verificacion de extension permitida
-    var ext = x.substring(x.lastIndexOf(".")).toLowerCase();
-    extensionesPermitidas = [".mp3", ".ogg"];
+    var ext = archivoCancion
+      .substring(archivoCancion.lastIndexOf("."))
+      .toLowerCase();
+    extensionesPermitidas = [".mp3", ".ogg", ".m4a"];
 
     extensionPermitida = false;
     for (var i = 0; i < extensionesPermitidas.length; i++) {
@@ -113,11 +114,12 @@ function validateFileSong() {
 
     if (!extensionPermitida) {
       alert("Extension de canción no permitida: " + ext);
-      return false;
+      retorno = false;
     } else {
-      return true;
+      retorno = true;
     }
   }
+  return retorno;
 }
 
 var tab;
@@ -130,6 +132,7 @@ var uploadTab = function (event) {
 };
 
 var cancion;
+
 var uploadSong = function (event) {
   const reader = new FileReader();
   reader.readAsDataURL(event.target.files[0]);
@@ -138,10 +141,12 @@ var uploadSong = function (event) {
   });
 };
 
-function agregarClase(tablaturaClase, cancionClase) {
+function agregarClase(tab, cancion, nombreAutor, nombreCancion) {
+  let tablaturaClase = new tablatura(tab, nombreAutor);
+  let cancionClase = new song(cancion, nombreCancion);
   let leccion = new clase(tablaturaClase, cancionClase);
   var clasesGuardadas = JSON.parse(localStorage.getItem("clases"));
-  if (clasesGuardadas == null) {
+  if (clasesGuardadas == null || clasesGuardadas == "") {
     clasesGuardadas = [];
   }
   if (clasesGuardadas.length >= 20) {
