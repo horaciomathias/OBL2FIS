@@ -73,7 +73,7 @@ function validateFileTab(archivoTab) {
   } else {
     //Verificacion de extension permitida
     var ext = archivoTab.substring(archivoTab.lastIndexOf(".")).toLowerCase();
-    extensionesPermitidasTab = [".gif", ".jpg", ".doc", ".pdf", ".jpg", ".png"];
+    extensionesPermitidasTab = [".jpg", ".png"];
     extensionPermitida = false;
     for (var i = 0; i < extensionesPermitidasTab.length; i++) {
       if (extensionesPermitidasTab[i] == ext) {
